@@ -132,6 +132,7 @@
     <string name="alert_service_notification_channel_description">Displayed while sending an Alert</string>
     <string name="activity_notification_message">Glad to see you are still alive! Cancelling Alert.</string>
     <string name="initial_check_notification_title">Are you still there?</string>
+    <string name="overlay_countdown_format">Alert will be sent in %1$d:%2$02d</string>
     <string name="initial_check_notification_text">Click here if you are still alive! Otherwise an alert will be sent in %1$s minutes.</string>
     <string name="alert_notification_title">Keep Alive Alert triggered!</string>
     <string name="call_alert_notification_text">A phone call has been placed to your emergency contact: %1$s</string>
@@ -341,6 +342,7 @@
     <string name="debug_log_no_active_alarm_showing_restart_button">No active alarm found, showing button to restart</string>
     <string name="debug_log_failed_getting_sms_manager_disable_button">Failed to get SMS manager? Disabling SMS test button</string>
     <string name="debug_log_current_alarm_time">Current alarm set for %1$s local time</string>
+    <string name="debug_log_direct_boot_notification_pending_app_open">Direct Boot notification still pending on app open — acknowledging</string>
 
     <!-- PermissionManager.kt -->
     <string name="debug_log_still_need_some_permissions">Still need some permissions</string>
@@ -356,6 +358,7 @@
     <string name="debug_log_app_in_background">KeepAlive is currently in the background</string>
     <string name="debug_log_flag_receiver_true">FLAG_RECEIVER_FOREGROUND is true</string>
     <string name="debug_log_flag_receiver_false">FLAG_RECEIVER_FOREGROUND is false</string>
+    <string name="debug_log_final_alarm_stale">Final alarm is stale: fired %1$ds late (threshold: %2$ds). Downgrading to \'periodic\' to avoid false alert.</string>
 
     <!-- AlertService.kt -->
     <string name="debug_log_wake_lock_acquired">Acquiring wake lock</string>
@@ -364,16 +367,37 @@
     <!-- SMSSentReceiver.kt -->
     <string name="debug_log_sms_sent">SMS sent!</string>
     <string name="debug_log_sms_send_error">SMS send error: %1$s</string>
+    <string name="debug_log_sms_receiver_not_registered">Receiver not registered</string>
 
     <!-- BootBroadcastReceiver.kt -->
-    <string name="debug_log_boot_completed">Boot completed!?</string>
+    <string name="debug_log_boot_completed">Boot completed!? %1$s</string>
     <string name="debug_log_app_is_disabled">App is disabled?</string>
     <string name="debug_log_boot_receiver_exception">Exception in BootBroadcastReceiver: %1$s</string>
+    <string name="debug_log_boot_completed_flag_status">BOOT_COMPLETED: direct_boot_notification_pending=%1$b, isUserUnlocked=%2$b</string>
+    <string name="debug_log_boot_completed_user_unlocked">BOOT_COMPLETED: User unlocked device - treating as activity, cancelling notification and resetting alarm</string>
+    <string name="debug_log_boot_completed_no_pending_notification">BOOT_COMPLETED: No Direct Boot notification pending, proceeding normally</string>
+    <string name="debug_log_locked_boot_completed_skipping">LOCKED_BOOT_COMPLETED received, skipping Direct Boot notification check. %1$s</string>
+    <string name="debug_log_locked_boot_user_already_unlocked">LOCKED_BOOT_COMPLETED: User is already unlocked, deferring to BOOT_COMPLETED</string>
+    <string name="debug_log_restored_alarm_stage">Restored alarm stage from device-protected storage: %1$s, calling doAlertCheck()</string>
 
     <!-- WebhookConfigManager.kt -->
     <string name="debug_log_webhook_config_saved">Webhook configuration saved</string>
     <string name="debug_log_webhook_config_deleted">Webhook configuration deleted</string>
     <string name="debug_log_webhook_config_load_error">Error loading webhook configuration</string>
+    <string name="debug_log_invalid_header_json">Invalid header JSON</string>
+
+    <!-- AlertFunctions.kt -->
+    <string name="debug_log_direct_boot_final_alarm_due">Direct Boot: Final alarm is due — sending alert</string>
+    <string name="debug_log_direct_boot_cleared_pending_flag">Direct Boot: Cleared direct_boot_notification_pending</string>
+    <string name="debug_log_direct_boot_set_pending_flag">Direct Boot: Set direct_boot_notification_pending=true</string>
+
+    <!-- Are You There overlay strings -->
+    <string name="are_you_there_title">Are you still there?</string>
+    <string name="are_you_there_message">Tap I\'M OK to cancel the alert.</string>
+    <string name="are_you_there_countdown">Alert will be sent in …</string>
+    <string name="are_you_there_countdown_format">Alert will be sent in %1$d:%2$02d</string>
+    <string name="are_you_there_waiting_for_acknowledgement">Waiting for acknowledgement</string>
+    <string name="are_you_there_im_ok">I\'m OK</string>
 
     <!-- WebhookSender.kt -->
     <string name="debug_log_disable_certificate_verification">Disabling webhook certificate verification!</string>

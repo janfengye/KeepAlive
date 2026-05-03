@@ -66,8 +66,39 @@ class MainActivity : AppCompatActivity() {
 
         Log.d(tag, "onResume, updating text views and checking permissions")
 
+        // Safety net: if an "Are you there?" notification was posted during Direct Boot
+        // and BOOT_COMPLETED failed to re-post it with a working PendingIntent (race
+        // condition, process death, etc.), the user may have opened the app manually.
+        // Check the flag and treat it as an acknowledgement.
+        checkDirectBootNotificationPending()
+
         val needPermissions = PermissionManager(this, this).checkNeedAnyPermissions()
         updateMainContent(needPermissions)
+    }
+
+    /**
+     * If a Direct Boot "Are you there?" notification is still pending, treat the
+     * user opening the app as an implicit acknowledgement — they're clearly alive.
+     */
+    private fun checkDirectBootNotificationPending() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
+
+        try {
+            val devicePrefs = getDeviceProtectedPreferences(this)
+            val pending = devicePrefs.getBoolean("direct_boot_notification_pending", false)
+            if (pending) {
+                Log.d(tag, "Direct Boot notification still pending — user opened app manually, acknowledging")
+                DebugLogger.d(tag, getString(R.string.debug_log_direct_boot_notification_pending_app_open))
+
+                AcknowledgeAreYouThere.acknowledge(this)
+
+                // show the user that the alert was cancelled
+                binding.root.findViewById<TextView>(R.id.textviewMonitoringMessage).text =
+                    getString(R.string.activity_notification_message)
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "Error checking Direct Boot notification flag", e)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -670,26 +701,21 @@ class MainActivity : AppCompatActivity() {
         if (extras != null) {
 
             // this should only get set on the 'Are you there?' notification
-            val alertCheck = extras.getBoolean("AlertCheck", false)
+            val alertCheck = extras.getBoolean(EXTRA_ALERT_CHECK, false)
 
-            Log.d(tag, "AlertCheck extra is $alertCheck")
+            Log.d(tag, "$EXTRA_ALERT_CHECK extra is $alertCheck")
 
             // if the AlertCheck is true, meaning the user clicked on the 'Are you there?'
             // notification. since we cancel this notification when sending an alert,
             //  this should only ever be hit BEFORE an alert is sent so we can assume that
             //  it hasn't been sent yet and just re-set it and let the user know that
-            //  the Alert is going to go off
+            //  the Alert isn't going to go off
             if (alertCheck) {
 
                 Log.d(tag, "Alert notification was clicked on!")
 
-                val checkPeriodHours = sharedPrefs.getString("time_period_hours", "12")?.toFloatOrNull() ?: 12f
-                val restPeriods: MutableList<RestPeriod> = loadJSONSharedPreference(sharedPrefs,"REST_PERIODS")
-
-                // if the user clicked on the notification we can assume they are active so
-                //  regardless of the last activity, just re-set the alarm
-                setAlarm(this, System.currentTimeMillis(), (checkPeriodHours * 60).toInt(),
-                    "periodic", restPeriods)
+                // Centralized behavior so notification tap behaves the same.
+                AcknowledgeAreYouThere.acknowledge(this)
 
                 // let the user know that the alert was cancelled
                 binding.root.findViewById<TextView>(R.id.textviewMonitoringMessage).text =
@@ -868,6 +894,20 @@ class MainActivity : AppCompatActivity() {
 
         } catch (e: Exception) {
             Log.e("checkAppBattRestriction", "Failed checking app battery restrictions?!", e)
+        }
+    }
+
+    companion object {
+        private const val EXTRA_ALERT_CHECK = "AlertCheck"
+
+        /**
+         * Used to open the app in the same way as tapping the "Are you there?" notification.
+         */
+        fun createAlertCheckIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                putExtra(EXTRA_ALERT_CHECK, true)
+            }
         }
     }
 }
