@@ -254,6 +254,17 @@ class SettingsActivity : AppCompatActivity() {
         val timePeriodValueTextView: TextView = findViewById(R.id.edit_time_period_hours)
         timePeriodValueTextView.text = sharedPrefs!!.getString(PrefKeys.TIME_PERIOD_HOURS, "12")
 
+        // subtitle showing whether the check period uses exact or inexact alarm
+        //  timing; the toggle itself lives in this row's edit dialog
+        val exactAlarmStatusTextView: TextView = findViewById(R.id.edit_exact_alarm_status)
+        exactAlarmStatusTextView.text = getString(
+            if (sharedPrefs!!.getBoolean(PrefKeys.USE_EXACT_ALARMS, false)) {
+                R.string.exact_alarm_status_exact
+            } else {
+                R.string.exact_alarm_status_inexact
+            }
+        )
+
         val monitoredAppsValueTextView: TextView = findViewById(R.id.edit_monitored_apps)
         val appsToMonitor: MutableList<MonitoredAppDetails> = loadJSONSharedPreference(
             sharedPrefs!!,"APPS_TO_MONITOR")
@@ -781,27 +792,19 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         private fun handleTimeInput(value: String) {
-            try {
-                // try to convert the string to a float
-                val timeValue = value.toFloat()
+            val result = validateTimePeriodInput(preferenceKey, value)
+            submitButton.isEnabled = result == TimeInputResult.VALID
 
-                val minutes = if (preferenceKey == "time_period_hours") {
-                    timeValue * 60
-                } else {
-                    timeValue
-                }
-
-                // for either of these settings, make sure the value doesn't result
-                //  in a minute value of less than 9 as we can't make alarms
-                //  that frequently
-                val valid = minutes >= AppController.ALARM_MINIMUM_TIME_PERIOD_MINUTES
-                submitButton.isEnabled = valid
-
-                if (!valid) {
+            when (result) {
+                TimeInputResult.TOO_SHORT ->
                     showToast(context.getString(R.string.time_period_too_short_message))
-                }
-            } catch (_: Exception) {
-                submitButton.isEnabled = false
+                TimeInputResult.TOO_LONG ->
+                    showToast(context.getString(R.string.time_period_too_long_message))
+                TimeInputResult.WHOLE_MINUTES_REQUIRED ->
+                    showToast(context.getString(R.string.followup_period_whole_minutes_message))
+                TimeInputResult.TOO_MANY_DECIMALS ->
+                    showToast(context.getString(R.string.time_period_too_many_decimals_message))
+                else -> {}
             }
         }
 

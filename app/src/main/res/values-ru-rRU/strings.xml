@@ -87,10 +87,15 @@
     <string name="monitoring_no_activity_detected_title">Мониторинг невозможен</string>
     <string name="monitoring_permissions_required_title">Предоставьте разрешения</string>
     <string name="monitoring_no_activity_detected_message">Мониторинг включен, но за последние %1$s часов активности не обнаружено. Убедитесь, что у вас включен экран блокировки и предоставлены разрешения на использование.</string>
+    <string name="monitoring_no_recipient_title">Нет получателя оповещения</string>
+    <string name="monitoring_no_recipient_message">Мониторинг работает, но ни один экстренный контакт не активен, поэтому оповещение не может быть отправлено. Добавьте или включите экстренный контакт в настройках.</string>
     <string name="monitoring_permissions_required_message">Мониторинг включен, но предоставлены не все разрешения. Нажмите кнопку \'Предоставить разрешения\' ниже.</string>
     <string name="alarm_message_too_long_message">Сообщение не может содержать более 160 символов.</string>
     <string name="phone_number_invalid_message">Введите корректный телефонный номер</string>
     <string name="time_period_too_short_message">Интервал должен быть не менее 10 минут.</string>
+    <string name="time_period_too_long_message">Интервал не должен превышать 7 дней.</string>
+    <string name="followup_period_whole_minutes_message">Минуты должны быть целым числом.</string>
+    <string name="time_period_too_many_decimals_message">Часы могут иметь не более 2 знаков после запятой.</string>
     <string name="test_phone_call_message">Будет совершен вызов на:\n%1$s</string>
     <string name="test_sms_message">SMS сообщение будет отправлено на:\n%1$s</string>
     <string name="unable_to_send_sms_message">Невозможно отправить SMS\nУбедитесь, что у вас активна SIM-карта.</string>
@@ -129,6 +134,8 @@
     <string name="sms_alert_failure_notification_text_with_error">Произошла ошибка при попытке отправить SMS-оповещение: %1$s</string>
     <string name="sms_service_failure_notification_title">Невозможно отправить SMS-оповещение</string>
     <string name="sms_service_failure_notification_text">Произошла ошибка при попытке отправить SMS-сообщение с оповещением. Убедитесь, что у вас активна SIM-карта.</string>
+    <string name="sms_permission_revoked_notification_title">Разрешение на отправку SMS было отозвано!</string>
+    <string name="sms_permission_revoked_notification_text">Keep Alive больше не может отправлять SMS-оповещения. Нажмите здесь, чтобы открыть приложение и снова предоставить разрешение на SMS.</string>
     <string name="alert_service_notification_title">Отправка оповещения…</string>
     <string name="alert_service_notification_message">Оповещение(я) отправляются вашим настроенным контактам, пожалуйста, подождите.</string>
 
@@ -168,6 +175,8 @@
     <string name="time_period_description">Количество часов бездействия перед появлением уведомления \'Вы здесь?\'</string>
     <string name="followup_time_period_title">Сколько минут ожидать подтверждения</string>
     <string name="exact_alarm_toggle_title">Использовать точное время сигнала</string>
+    <string name="exact_alarm_status_exact">Точное время сигнала: Включено</string>
+    <string name="exact_alarm_status_inexact">Точное время сигнала: Выключено</string>
     <string name="exact_alarm_note">ПРИМЕЧАНИЕ: Это время неточное, и система может задержать уведомление до 1 часа.\n\nВключите \'Использовать точное время сигнала\' ниже, если вам нужны точные проверки — это может немного увеличить расход батареи.</string>
     <string name="rest_period_title">Период отдыха</string>
     <string name="followup_time_period_description">Количество минут ожидания после отправки уведомления \'Вы здесь?\', прежде чем оповещение будет отправлено вашим контактам для экстренных случаев.</string>
@@ -318,6 +327,7 @@
     <!-- MainActivity.kt -->
     <string name="debug_log_no_alarm_or_monitoring_disabled">Будильник не найден или мониторинг отключен</string>
     <string name="debug_log_no_events_found_lock_screen">События не найдены, возможно, нет экрана блокировки?</string>
+    <string name="debug_log_no_alert_channel">Мониторинг включён, но получатель оповещения не настроен!</string>
     <string name="debug_log_no_active_alarm_showing_restart_button">Активный будильник не найден, отображение кнопки перезапуска</string>
     <string name="debug_log_failed_getting_sms_manager_disable_button">Не удалось получить менеджер SMS? Отключение кнопки тестирования SMS</string>
     <string name="debug_log_current_alarm_time">Текущий будильник установлен на %1$s местного времени</string>
@@ -330,6 +340,7 @@
 
     <!-- AlarmReceiver.kt -->
     <string name="debug_log_alarm_just_fired">Будильник только что сработал!</string>
+    <string name="debug_log_sms_permission_revoked">Разрешение SEND_SMS больше не предоставлено!</string>
     <string name="debug_log_app_not_enabled_alarm_went_off">Приложение не включено, почему сработал будильник?!</string>
     <string name="debug_log_alarm_time_comparison">Время %1$s UTC, будильник должен был сработать в %2$s UTC, что было %3$d секунд назад</string>
     <string name="debug_log_failed_processing_alarm">Не удалось обработать будильник:</string>
@@ -360,6 +371,7 @@
     <string name="debug_log_locked_boot_completed_skipping">Получен LOCKED_BOOT_COMPLETED, пропускаем проверку уведомления Direct Boot. %1$s</string>
     <string name="debug_log_locked_boot_user_already_unlocked">LOCKED_BOOT_COMPLETED: Пользователь уже разблокирован, передаём обработку BOOT_COMPLETED</string>
     <string name="debug_log_restored_alarm_stage">Восстановлен этап будильника из защищённого хранилища устройства: %1$s, вызываем doAlertCheck()</string>
+    <string name="debug_log_boot_alert_already_sent">Оповещение уже было отправлено, а автоматический перезапуск мониторинга отключён, после перезагрузки остаётся отключённым</string>
 
     <!-- WebhookConfigManager.kt -->
     <string name="debug_log_webhook_config_saved">Конфигурация вебхука сохранена</string>

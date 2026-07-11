@@ -87,10 +87,15 @@
     <string name="monitoring_no_activity_detected_title">Monitoreo no posible</string>
     <string name="monitoring_permissions_required_title">Permisos necesarios</string>
     <string name="monitoring_no_activity_detected_message">El monitoreo está activado pero no se ha detectado actividad en las últimas %1$s horas. Asegúrate de tener una pantalla de bloqueo activada y de haber concedido el permiso de Acceso de uso.</string>
+    <string name="monitoring_no_recipient_title">Sin destinatario de alerta</string>
+    <string name="monitoring_no_recipient_message">La supervisión está en marcha, pero ningún contacto de emergencia está activo, por lo que no se puede enviar ninguna alerta. Añada o active un contacto de emergencia en los ajustes.</string>
     <string name="monitoring_permissions_required_message">El monitoreo está activado pero no se han concedido todos los permisos. Toca el botón "Conceder permisos" de abajo.</string>
     <string name="alarm_message_too_long_message">El mensaje no puede tener más de 160 caracteres.</string>
     <string name="phone_number_invalid_message">Por favor, ingresa un número de teléfono válido.</string>
     <string name="time_period_too_short_message">El intervalo debe ser de al menos 10 minutos.</string>
+    <string name="time_period_too_long_message">El intervalo no puede ser de más de 7 días.</string>
+    <string name="followup_period_whole_minutes_message">Los minutos deben ser un número entero.</string>
+    <string name="time_period_too_many_decimals_message">Las horas pueden tener como máximo 2 decimales.</string>
     <string name="test_phone_call_message">Se realizará una llamada telefónica a:\n%1$s</string>
     <string name="test_sms_message">Se enviará(n) mensaje(s) SMS a:\n%1$s</string>
     <string name="unable_to_send_sms_message">No se puede enviar el SMS\nVerifica que tengas una SIM activa</string>
@@ -129,6 +134,8 @@
     <string name="sms_alert_failure_notification_text_with_error">Ocurrió un error al intentar enviar la alerta SMS: %1$s</string>
     <string name="sms_service_failure_notification_title">No se puede enviar la alerta SMS</string>
     <string name="sms_service_failure_notification_text">Ocurrió un error al intentar enviar la alerta SMS, verifica que tengas una SIM activa</string>
+    <string name="sms_permission_revoked_notification_title">¡El permiso de SMS ha sido revocado!</string>
+    <string name="sms_permission_revoked_notification_text">Keep Alive ya no puede enviar alertas por SMS. Toque aquí para abrir la aplicación y volver a conceder el permiso de SMS.</string>
     <string name="alert_service_notification_title">Enviando alerta…</string>
     <string name="alert_service_notification_message">Se están enviando alertas a tus contactos configurados, por favor espera.</string>
 
@@ -168,6 +175,8 @@
     <string name="time_period_description">El número de horas de inactividad antes de que se te muestre una notificación \'¿Sigues ahí?\'.</string>
     <string name="followup_time_period_title">Minutos de espera para la confirmación</string>
     <string name="exact_alarm_toggle_title">Usar temporización exacta de alarmas</string>
+    <string name="exact_alarm_status_exact">Temporización exacta de alarmas: Activada</string>
+    <string name="exact_alarm_status_inexact">Temporización exacta de alarmas: Desactivada</string>
     <string name="exact_alarm_note">NOTA: Esta temporización no es exacta y el sistema puede retrasar esta notificación hasta 1 hora.\n\nActiva \'Usar temporización exacta de alarmas\' abajo si necesitas verificaciones precisas, lo que puede aumentar ligeramente el uso de la batería.</string>
     <string name="rest_period_title">Rango de tiempo del período de descanso</string>
     <string name="followup_time_period_description">El número de minutos a esperar después de enviar una notificación \'¿Sigues ahí?\' antes de que se envíe una alerta a tu(s) contacto(s) de emergencia</string>
@@ -318,6 +327,7 @@
     <!-- MainActivity.kt -->
     <string name="debug_log_no_alarm_or_monitoring_disabled">No se encontró ninguna alarma o el monitoreo está desactivado</string>
     <string name="debug_log_no_events_found_lock_screen">No se encontraron eventos, ¿quizás no hay pantalla de bloqueo?</string>
+    <string name="debug_log_no_alert_channel">¡La supervisión está activada pero no hay ningún destinatario de alerta configurado!</string>
     <string name="debug_log_no_active_alarm_showing_restart_button">No se encontró ninguna alarma activa, mostrando el botón para reiniciar</string>
     <string name="debug_log_failed_getting_sms_manager_disable_button">¿Error al obtener el gestor de SMS? Desactivando el botón de prueba de SMS</string>
     <string name="debug_log_current_alarm_time">Alarma actual establecida para las %1$s hora local</string>
@@ -330,6 +340,7 @@
 
     <!-- AlarmReceiver.kt -->
     <string name="debug_log_alarm_just_fired">¡La alarma acaba de activarse!</string>
+    <string name="debug_log_sms_permission_revoked">¡El permiso SEND_SMS ya no está concedido!</string>
     <string name="debug_log_app_not_enabled_alarm_went_off">La app no está activada, ¿por qué se activó la alarma?</string>
     <string name="debug_log_alarm_time_comparison">La hora es %1$s UTC, la alarma debía activarse a las %2$s UTC, que fue hace %3$d segundos</string>
     <string name="debug_log_failed_processing_alarm">Error al procesar la alarma:</string>
@@ -360,6 +371,7 @@
     <string name="debug_log_locked_boot_completed_skipping">LOCKED_BOOT_COMPLETED recibido, omitiendo la verificación de notificación de Direct Boot. %1$s</string>
     <string name="debug_log_locked_boot_user_already_unlocked">LOCKED_BOOT_COMPLETED: El usuario ya está desbloqueado, difiriendo a BOOT_COMPLETED</string>
     <string name="debug_log_restored_alarm_stage">Etapa de alarma restaurada desde el almacenamiento protegido del dispositivo: %1$s, llamando a doAlertCheck()</string>
+    <string name="debug_log_boot_alert_already_sent">La alerta ya se envió y el reinicio automático del monitoreo está desactivado, permaneciendo desarmado tras el reinicio</string>
 
     <!-- WebhookConfigManager.kt -->
     <string name="debug_log_webhook_config_saved">Configuración del webhook guardada</string>

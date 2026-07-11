@@ -87,10 +87,15 @@
     <string name="monitoring_no_activity_detected_title">Surveillance impossible</string>
     <string name="monitoring_permissions_required_title">Autorisations requises</string>
     <string name="monitoring_no_activity_detected_message">La surveillance est activée, mais aucune activité n\'a été détectée au cours des %1$s dernières heures. Veuillez vous assurer que votre écran de verrouillage est activé et que vous avez accordé les autorisations d\'accès à l\'utilisation.</string>
+    <string name="monitoring_no_recipient_title">Aucun destinataire d\'alerte</string>
+    <string name="monitoring_no_recipient_message">La surveillance est en cours, mais aucun contact d\'urgence n\'est actif, donc aucune alerte ne peut être envoyée. Veuillez ajouter ou activer un contact d\'urgence dans les paramètres.</string>
     <string name="monitoring_permissions_required_message">La surveillance est activée, mais toutes les autorisations n\'ont pas été accordées. Veuillez cliquer sur le bouton « Accorder des autorisations » ci-dessous.</string>
     <string name="alarm_message_too_long_message">Le message ne peut pas contenir plus de 160 caractères.</string>
     <string name="phone_number_invalid_message">Veuillez saisir un numéro de téléphone valide.</string>
     <string name="time_period_too_short_message">L\'intervalle doit être d\'au moins 10 minutes.</string>
+    <string name="time_period_too_long_message">L\'intervalle ne peut pas dépasser 7 jours.</string>
+    <string name="followup_period_whole_minutes_message">Les minutes doivent être un nombre entier.</string>
+    <string name="time_period_too_many_decimals_message">Les heures peuvent avoir au maximum 2 décimales.</string>
     <string name="test_phone_call_message">Un appel téléphonique sera passé à:\n%1$s</string>
     <string name="test_sms_message">Le(s) message(s) SMS sera envoyé à:\n%1$s</string>
     <string name="unable_to_send_sms_message">Impossible d\'envoyer des SMS\nVeuillez vérifier que vous disposez d\'une carte SIM active</string>
@@ -129,6 +134,8 @@
     <string name="sms_alert_failure_notification_text_with_error">Une erreur s\'est produite lors de la tentative d\'envoi d\'un SMS d\'alerte: %1$s</string>
     <string name="sms_service_failure_notification_title">Impossible de transmettre l\'alerte SMS</string>
     <string name="sms_service_failure_notification_text">Une erreur s\'est produite lors de la tentative d\'envoi d\'un SMS d\'alerte, veuillez vérifier que vous disposez d\'une carte SIM active</string>
+    <string name="sms_permission_revoked_notification_title">L\'autorisation SMS a été révoquée!</string>
+    <string name="sms_permission_revoked_notification_text">Keep Alive ne peut plus envoyer d\'alertes SMS. Touchez ici pour ouvrir l\'application et accorder de nouveau l\'autorisation SMS.</string>
     <string name="alert_service_notification_title">Envoi de l\'alerte en cours…</string>
     <string name="alert_service_notification_message">L\'alerte (ou les alertes) est en cours d\'envoi à vos contacts configurés, veuillez patienter.</string>
 
@@ -168,6 +175,8 @@
     <string name="time_period_description">Le nombre d\'heures d\'inactivité avant qu\'une notification «Êtes-vous là?» ne soit affichée.</string>
     <string name="followup_time_period_title">Minutes à attendre pour la confirmation</string>
     <string name="exact_alarm_toggle_title">Utiliser le minutage exact de l\'alarme</string>
+    <string name="exact_alarm_status_exact">Minutage exact de l\'alarme : Activé</string>
+    <string name="exact_alarm_status_inexact">Minutage exact de l\'alarme : Désactivé</string>
     <string name="exact_alarm_note">REMARQUE : Ce minutage n\'est pas exact et le système peut retarder cette notification jusqu\'à 1 heure.\n\nActivez «Utiliser le minutage exact de l\'alarme» ci-dessous si vous avez besoin de vérifications précises, ce qui peut légèrement augmenter l\'utilisation de la batterie.</string>
     <string name="rest_period_title">Plage de temps de la période de repos</string>
     <string name="followup_time_period_description">Le nombre de minutes à attendre après l\'envoi d\'une notification «Êtes-vous là?» avant qu\'une alerte ne soit envoyée à vos contacts d\'urgence</string>
@@ -318,6 +327,7 @@
     <!-- MainActivity.kt -->
     <string name="debug_log_no_alarm_or_monitoring_disabled">Aucune alarme trouvée ou surveillance désactivée</string>
     <string name="debug_log_no_events_found_lock_screen">Aucun événement trouvé, peut-être pas d\'écran de verrouillage?</string>
+    <string name="debug_log_no_alert_channel">La surveillance est activée, mais aucun destinataire d\'alerte n\'est configuré!</string>
     <string name="debug_log_no_active_alarm_showing_restart_button">Aucune alarme active trouvée, affichage du bouton de redémarrage</string>
     <string name="debug_log_failed_getting_sms_manager_disable_button">Échec de l\'obtention du gestionnaire de SMS? Désactivation du bouton de test SMS</string>
     <string name="debug_log_current_alarm_time">Alarme actuelle définie pour %1$s heure locale</string>
@@ -330,6 +340,7 @@
 
     <!-- AlarmReceiver.kt -->
     <string name="debug_log_alarm_just_fired">L\'alarme vient de se déclencher!</string>
+    <string name="debug_log_sms_permission_revoked">L\'autorisation SEND_SMS n\'est plus accordée!</string>
     <string name="debug_log_app_not_enabled_alarm_went_off">L\'application n\'est pas activée, pourquoi l\'alarme s\'est-elle déclenchée?!</string>
     <string name="debug_log_alarm_time_comparison">L\'heure est %1$s UTC, l\'alarme était censée se déclencher à %2$s UTC, c\'est-à-dire il y a %3$d secondes</string>
     <string name="debug_log_failed_processing_alarm">Échec lors du traitement de l\'alarme:</string>
@@ -360,6 +371,7 @@
     <string name="debug_log_locked_boot_completed_skipping">LOCKED_BOOT_COMPLETED reçu, vérification de la notification Direct Boot ignorée. %1$s</string>
     <string name="debug_log_locked_boot_user_already_unlocked">LOCKED_BOOT_COMPLETED : L\'utilisateur est déjà déverrouillé, report vers BOOT_COMPLETED</string>
     <string name="debug_log_restored_alarm_stage">Étape d\'alarme restaurée depuis le stockage protégé de l\'appareil : %1$s, appel de doAlertCheck()</string>
+    <string name="debug_log_boot_alert_already_sent">L\'alerte a déjà été envoyée et le redémarrage automatique de la surveillance est désactivé, reste désarmé après le redémarrage</string>
 
     <!-- WebhookConfigManager.kt -->
     <string name="debug_log_webhook_config_saved">Configuration du webhook enregistrée</string>

@@ -87,10 +87,15 @@
     <string name="monitoring_no_activity_detected_title">无法进行监测</string>
     <string name="monitoring_permissions_required_title">需要授予权限</string>
     <string name="monitoring_no_activity_detected_message">监测器已启用，但在过去 %1$s 小时内未检测到任何活动。 请确保屏幕锁定已启用并授予了使用情况访问权限。</string>
+    <string name="monitoring_no_recipient_title">没有警报接收人</string>
+    <string name="monitoring_no_recipient_message">监控正在运行，但没有已启用的紧急联系人，因此无法发送警报。请在设置中添加或启用紧急联系人。</string>
     <string name="monitoring_permissions_required_message">监测器已启用，但尚未授予必要权限。 请点击下面的“授予权限”按钮。</string>
     <string name="alarm_message_too_long_message">短信不得超过 160 个字符。</string>
     <string name="phone_number_invalid_message">请输入一个有效的电话号码。</string>
     <string name="time_period_too_short_message">时间间隔不应小于 10 分钟。</string>
+    <string name="time_period_too_long_message">时间间隔不应超过 7 天。</string>
+    <string name="followup_period_whole_minutes_message">分钟必须为整数。</string>
+    <string name="time_period_too_many_decimals_message">小时最多保留 2 位小数。</string>
     <string name="test_phone_call_message">将至电:\n%1$s</string>
     <string name="test_sms_message">短信将发送至:\n%1$s</string>
     <string name="unable_to_send_sms_message">无法发送短信\n请插入有效的SIM卡</string>
@@ -129,6 +134,8 @@
     <string name="sms_alert_failure_notification_text_with_error">发送短信时发生错误: %1$s</string>
     <string name="sms_service_failure_notification_title">无法发送提醒短信</string>
     <string name="sms_service_failure_notification_text">发送提醒短信时发生错误，请插入有效的SIM卡。</string>
+    <string name="sms_permission_revoked_notification_title">短信权限已被撤销！</string>
+    <string name="sms_permission_revoked_notification_text">Keep Alive 无法再发送短信警报。点击此处打开应用并重新授予短信权限。</string>
     <string name="alert_service_notification_title">正在发送提醒…</string>
     <string name="alert_service_notification_message">提醒消息正在发送给您的联系人，请稍候。</string>
 
@@ -168,6 +175,8 @@
     <string name="time_period_description">设备超过 # 小时不活动，系统将弹出 \'Are you there?\' 的通知。</string>
     <string name="followup_time_period_title">等待多久后发出提醒</string>
     <string name="exact_alarm_toggle_title">使用精确闹钟计时</string>
+    <string name="exact_alarm_status_exact">精确闹钟计时：已启用</string>
+    <string name="exact_alarm_status_inexact">精确闹钟计时：已禁用</string>
     <string name="exact_alarm_note">注意：此时间并非精确值，系统可能延迟最多1小时发送通知。\n\n若需精确检测，请启用下方的“使用精确闹钟计时”功能，可能略微增加电池电量消耗。</string>
     <string name="rest_period_title">休眠期</string>
     <string name="followup_time_period_description">弹出 \'Are you there?\' 的通知后，等待 # 分钟无人响应才会向您的联系人发出提醒。</string>
@@ -318,6 +327,7 @@
     <!-- MainActivity.kt -->
     <string name="debug_log_no_alarm_or_monitoring_disabled">No alarm found or monitoring is disabled</string>
     <string name="debug_log_no_events_found_lock_screen">No events found, may not have lock screen?</string>
+    <string name="debug_log_no_alert_channel">监控已启用，但未配置警报接收人！</string>
     <string name="debug_log_no_active_alarm_showing_restart_button">No active alarm found, showing button to restart</string>
     <string name="debug_log_failed_getting_sms_manager_disable_button">Failed to get SMS manager? Disabling SMS test button</string>
     <string name="debug_log_current_alarm_time">Current alarm set for %1$s local time</string>
@@ -330,6 +340,7 @@
 
     <!-- AlarmReceiver.kt -->
     <string name="debug_log_alarm_just_fired">Alarm just fired!</string>
+    <string name="debug_log_sms_permission_revoked">SEND_SMS 权限已不再授予！</string>
     <string name="debug_log_app_not_enabled_alarm_went_off">App is not enabled, why did the alarm go off?!</string>
     <string name="debug_log_alarm_time_comparison">Time is %1$s UTC, alarm was supposed to go off at %2$s UTC, which was %3$d seconds ago</string>
     <string name="debug_log_failed_processing_alarm">Failed while processing alarm:</string>
@@ -360,6 +371,7 @@
     <string name="debug_log_locked_boot_completed_skipping">收到 LOCKED_BOOT_COMPLETED，跳过 Direct Boot 通知检查。%1$s</string>
     <string name="debug_log_locked_boot_user_already_unlocked">LOCKED_BOOT_COMPLETED：用户已解锁，延迟到 BOOT_COMPLETED 处理</string>
     <string name="debug_log_restored_alarm_stage">从设备保护存储中恢复了闹钟阶段：%1$s，调用 doAlertCheck()</string>
+    <string name="debug_log_boot_alert_already_sent">警报已发送且自动重启监控已停用，重启后保持停用状态</string>
 
     <!-- WebhookConfigManager.kt -->
     <string name="debug_log_webhook_config_saved">Webhook configuration saved</string>
