@@ -13,6 +13,7 @@
     <string name="confirm">Подтвердить</string>
     <string name="back">Назад</string>
     <string name="go_to_settings">В настройки</string>
+    <string name="permission_denied_go_to_settings_message">Это разрешение сейчас установлено на «Запрещено», поэтому его нельзя запросить здесь. Откройте настройки и предоставьте его, чтобы можно было отправлять оповещения.</string>
     <string name="enabled">Включено</string>
 
     <!-- webhook layout strings -->
@@ -71,14 +72,16 @@
 
     <!-- abb hibernation/restriction stuff -->
     <string name="hibernation_dialog_title">Выключить гибернацию приложения</string>
-    <string name="hibernation_dialog_message"><![CDATA[Android теперь автоматически удаляет разрешения для приложений, которые в последнее время не использовались. Keep Alive после настройки параметров не требует какого-либо дальнейшего вмешательства, и его разрешения могут быть отозваны.<br/><br/>Чтобы гарантировать, что Keep Alive может работать, не отменяется, отключите функцию <b>Приостановить работу в неактивный период</b> опция для приложения Keep Alive.]]></string>
-    <string name="hibernation_dialog_message_api35"><![CDATA[Android теперь автоматически удаляет разрешения для приложений, которые не использовались в последнее время. Keep Alive после настройки параметров не требует дальнейшего взаимодействия, и его разрешения могут быть отозваны.<br/><br/>Чтобы разрешения не были отозваны, отключите опцию <b>Остановить работу приложения при простое</b> для приложения Keep Alive.]]></string>
+    <string name="hibernation_dialog_message"><![CDATA[Android теперь автоматически удаляет разрешения для приложений, которые не использовались в последнее время. Keep Alive после настройки параметров не требует дальнейшего взаимодействия, и его разрешения могут быть отозваны.<br/><br/>Чтобы разрешения не были отозваны, отключите опцию <b>Остановить работу приложения при простое</b> для приложения Keep Alive.]]></string>
+    <string name="hibernation_dialog_message_api32"><![CDATA[Android теперь автоматически удаляет разрешения для приложений, которые в последнее время не использовались. Keep Alive после настройки параметров не требует какого-либо дальнейшего вмешательства, и его разрешения могут быть отозваны.<br/><br/>Чтобы гарантировать, что Keep Alive может работать, не отменяется, отключите функцию <b>Приостановить работу в неактивный период</b> опция для приложения Keep Alive.]]></string>
     <string name="hibernation_dialog_message_api30"><![CDATA[Android теперь автоматически удаляет разрешения для приложений, которые в последнее время не использовались. Keep Alive после настройки параметров не требует какого-либо дальнейшего взаимодействия, пока не будет активировано оповещение.<br/><br/>Чтобы убедиться, что разрешения не отозваны, перейдите в раздел <b>Разрешения</b> для Keep Alive и отключите параметр <b>Отзывать разрешения у неиспользуемых приложений</b> опция не используется.]]></string>
     <string name="hibernation_dialog_message_api31"><![CDATA[Android теперь автоматически удаляет разрешения для приложений, которые в последнее время не использовались. Keep Alive после настройки параметров не требует какого-либо дальнейшего вмешательства, если только не сработает оповещение.<br/><br/>Чтобы гарантировать, что разрешения не будут отозваны, отключите параметр <b>Удалять разрешения и освобождать место</b> для Keep Alive приложение.]]></string>
     <string name="hibernation_dialog_message_api_backport"><![CDATA[Android теперь автоматически удаляет разрешения для приложений, которые в последнее время не использовались. Keep Alive после настройки параметров не требует какого-либо дальнейшего взаимодействия, если только не сработает оповещение.<br/><br/>Чтобы гарантировать, что разрешения не будут отозваны, отключите опцию <b>Отзывать разрешения, если приложение не используется</b>.]]></string>
 
     <!-- MainActivity textview and button messages -->
-    <string name="monitoring_active_message">Последняя активность обнаружена: %1$s\nСледующая проверка активности: %2$s часов and %3$s минут</string>
+    <string name="monitoring_active_message">Последняя активность обнаружена: %1$s\nСледующая проверка активности: %2$s</string>
+    <string name="countdown_format_hours_minutes">%1$s ч %2$s мин</string>
+    <string name="countdown_format_minutes">%1$s мин</string>
     <string name="monitoring_active_title">Мониторинг активен</string>
     <string name="monitoring_impaired_title">Мониторинг активен\nНо может работать некорректно</string>
     <string name="monitoring_inactive_message">Мониторинг неактивен.\nНажмите на кнопку для перезапуска.</string>
@@ -183,7 +186,7 @@
     <string name="contact_phone_title">Номер телефона для звонка (необязательно)</string>
     <string name="add_sms_contact_button_text">Добавить экстренный контакт по SMS</string>
     <string name="contact_phone_description">При срабатывании оповещения на этот номер телефона будет совершен телефонный звонок с включенной громкой связью.\n\nОбратите внимание, что для этого требуются дополнительные разрешения, чтобы телефонные звонки можно было совершать в фоновом режиме.</string>
-    <string name="default_alert_message">Привет! Я давно не пользовался телефоном и, возможно, мне нужна помощь. Пожалуйста, пришлите помощь!</string>
+    <string name="default_alert_message">Автоматическое оповещение: я давно не пользуюсь телефоном, возможно, мне нужна помощь. Свяжитесь со мной, а если не выйдет — проверьте, всё ли в порядке.</string>
     <string name="default_alert_message_alt">Эй, если я не свяжусь с тобой в ближайшие 24 часа, ты знаешь, что делать.</string>
     <string name="add_emergency_contact_title">Добавить экстренный контакт</string>
     <string name="edit_emergency_contact_title">Редактировать экстренный контакт</string>
@@ -251,9 +254,13 @@
     <!-- REQUEST_SCHEDULE_EXACT_ALARM Permission (For S and above) -->
     <string name="permission_schedule_alarms_title">Требуется разрешение: Отложенные уведомления</string>
     <string name="permission_schedule_alarms_description">Планирование оповещений необходимо, чтобы оповещение могло срабатывать, даже когда ваше устройство находится в спящем режиме или в режиме \'Не беспокоить\'.\n\nВключите это разрешение для приложения KeepAlive в настройках вашего устройства.</string>
+    <string name="permission_full_screen_intent_title">Требуется разрешение: Полноэкранные уведомления</string>
+    <string name="permission_full_screen_intent_description">Полноэкранные уведомления необходимы, чтобы показывать проверку \'Вы ещё здесь?\' на экране блокировки, чтобы её нельзя было пропустить, пока телефон заблокирован.\n\nНа следующем экране включите \'Полноэкранные уведомления\' для приложения Keep Alive.</string>
 
     <!-- AlertFunctions.kt -->
     <string name="debug_log_doing_alert_check">Выполнение периодической проверки, этап оповещения %1$s</string>
+    <string name="debug_log_full_screen_prompt_shown">Полноэкранный запрос \'Вы ещё здесь?\' показан поверх экрана блокировки</string>
+    <string name="debug_log_full_screen_prompt_acknowledged">Полноэкранный запрос \'Вы ещё здесь?\' подтверждён</string>
     <string name="debug_log_sending_alert_sms">Отправка SMS-оповещения!</string>
     <string name="debug_log_getting_sms_manager_with_sub_id">Получение менеджера SMS с помощью context.getSystemService и идентификатора подписки %1$d</string>
     <string name="debug_log_getting_sms_manager_with_context">Получение менеджера SMS с помощью context.getSystemService</string>

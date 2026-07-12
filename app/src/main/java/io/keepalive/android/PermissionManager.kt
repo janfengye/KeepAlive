@@ -4,9 +4,11 @@ import android.Manifest
 import android.app.AlarmManager
 import androidx.appcompat.app.AlertDialog
 import android.app.AppOpsManager
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.util.Log
@@ -124,6 +126,17 @@ class PermissionManager(private val context: Context, private val activity: AppC
                 context.getString(R.string.permission_schedule_alarms_description)
             )
         }
+
+        // full-screen intent special access added in API 34. the Play Store
+        //  revokes the default grant at install for apps without an approved
+        //  calling/alarm core function, so the user may need to enable it
+        //  manually; sideloaded/F-Droid installs keep the default grant
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            permissionExplanations[Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT] = arrayOf(
+                context.getString(R.string.permission_full_screen_intent_title),
+                context.getString(R.string.permission_full_screen_intent_description)
+            )
+        }
     }
 
     // check whether we need any permissions without actually requesting them
@@ -148,7 +161,8 @@ class PermissionManager(private val context: Context, private val activity: AppC
         if (!checkUsageStatsPermissions(false) ||
             !checkScheduleExactAlarmPermissions(false) ||
             !checkBackgroundLocationPermissions(false) ||
-            !checkOverlayPermissions(false)
+            !checkOverlayPermissions(false) ||
+            !checkFullScreenIntentPermissions(false)
         ) {
             DebugLogger.d(tag, context.getString(R.string.debug_log_still_need_some_permissions))
             return true
@@ -183,7 +197,8 @@ class PermissionManager(private val context: Context, private val activity: AppC
         return if (!checkUsageStatsPermissions(true) ||
             !checkScheduleExactAlarmPermissions(true) ||
             !checkBackgroundLocationPermissions(true) ||
-            !checkOverlayPermissions(true)
+            !checkOverlayPermissions(true) ||
+            !checkFullScreenIntentPermissions(true)
         ) {
             DebugLogger.d(tag, context.getString(R.string.debug_log_finished_requesting_permissions))
             false
@@ -251,9 +266,59 @@ class PermissionManager(private val context: Context, private val activity: AppC
                 // request the permission by taking the user to the settings page
                 Log.d(tag, "Requesting setting permission: $permission")
                 val myIntent = Intent(permission)
+
+                // the full-screen intent settings action expects a package URI
+                //  so it opens directly on this app's toggle
+                if (permission == Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT) {
+                    myIntent.data = Uri.fromParts("package", context.packageName, null)
+                }
+
                 activity?.startActivity(myIntent) ?: run {
                     myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context.startActivity(myIntent)
+                }
+            }
+            .setNegativeButton(context.getString(R.string.cancel), null)
+            .show()
+    }
+
+    // Handle the result of a runtime permission request (call from the hosting
+    //  Activity's onRequestPermissionsResult). Once a permission is permanently
+    //  denied - "Don't allow" twice, or set to "Not allowed" in system settings -
+    //  requestPermissions() no longer shows the system dialog and silently
+    //  returns denied (the framework logs "No requestable permission in the
+    //  request."), so the explain-then-request path dead-ends. In that case send
+    //  the user to the app's settings page where they can re-enable it.
+    fun handlePermissionResult(permissions: Array<out String>, grantResults: IntArray) {
+        val act = activity ?: return
+        val permanentlyDenied = firstPermanentlyDeniedPermission(
+            permissions,
+            grantResults,
+            shouldShowRationale = { ActivityCompat.shouldShowRequestPermissionRationale(act, it) },
+            isKnown = { permissionExplanations.containsKey(it) }
+        ) ?: return
+
+        explainPermanentlyDeniedPermission(permanentlyDenied)
+    }
+
+    private fun explainPermanentlyDeniedPermission(permission: String) {
+        val title = permissionExplanations[permission]?.get(0) ?: return
+        Log.d(tag, "Permission $permission is permanently denied, routing to app settings")
+
+        AlertDialog.Builder(context, R.style.AlertDialogTheme)
+            .setTitle(title)
+            .setMessage(context.getString(R.string.permission_denied_go_to_settings_message))
+            .setPositiveButton(context.getString(R.string.go_to_settings)) { _, _ ->
+
+                // the system request dialog won't appear anymore, so open the
+                //  app's details page where the permission can be re-enabled
+                val intent = Intent(
+                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.fromParts("package", context.packageName, null)
+                )
+                activity?.startActivity(intent) ?: run {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(intent)
                 }
             }
             .setNegativeButton(context.getString(R.string.cancel), null)
@@ -317,6 +382,39 @@ class PermissionManager(private val context: Context, private val activity: AppC
         } else {
             Log.d(tag, "Don't have fine location permissions?!")
             return false
+        }
+    }
+
+    private fun checkFullScreenIntentPermissions(requestPermissions: Boolean): Boolean {
+
+        // only needed when the user has the full-screen prompt enabled; the
+        //  special access exists from API 34 and is granted at install below that
+        if (!overlayPromptEnabled || Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            return true
+        }
+
+        Log.d(tag, "Checking full-screen intent permissions")
+
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+
+        if (notificationManager != null && !notificationManager.canUseFullScreenIntent()) {
+
+            if (!requestPermissions) {
+                return false
+            }
+
+            explainSettingsPermission(
+                Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT,
+                permissionExplanations[Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT]!![0],
+                permissionExplanations[Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT]!![1]
+            )
+
+            // return false because we haven't actually granted the permission at this point
+            return false
+        } else {
+            Log.d(tag, "Full-screen intent permission already granted!")
+            return true
         }
     }
 
@@ -418,4 +516,33 @@ class PermissionManager(private val context: Context, private val activity: AppC
             return true
         }
     }
+}
+
+/**
+ * The first requested permission that came back denied and can no longer be
+ * requested through the system dialog — i.e. permanently denied. In the result
+ * callback, "denied AND no rationale" is the permanent-denial signature: a
+ * first-time or soft-denied permission would have shown the system dialog
+ * (granting, or making [shouldShowRationale] true), so reaching the callback
+ * denied without rationale means requestPermissions() no-op'd and the user must
+ * go to settings. Returns null when nothing needs that handling (e.g. all
+ * granted, or an empty/cancelled result). [isKnown] limits handling to
+ * permissions we actually explain.
+ */
+internal fun firstPermanentlyDeniedPermission(
+    permissions: Array<out String>,
+    grantResults: IntArray,
+    shouldShowRationale: (String) -> Boolean,
+    isKnown: (String) -> Boolean
+): String? {
+    for (i in permissions.indices) {
+        if (i < grantResults.size &&
+            grantResults[i] == PackageManager.PERMISSION_DENIED &&
+            !shouldShowRationale(permissions[i]) &&
+            isKnown(permissions[i])
+        ) {
+            return permissions[i]
+        }
+    }
+    return null
 }

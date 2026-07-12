@@ -176,9 +176,16 @@ class MainActivity : AppCompatActivity() {
             "requestCode: $requestCode, permissions: ${permissions.contentToString()}, grantResults: ${grantResults.contentToString()}"
         )
 
+        val permissionManager = PermissionManager(this, this)
+
+        // if a permission was permanently denied the system dialog won't appear
+        //  anymore, so route the user to the app's settings page instead of
+        //  silently no-op'ing the request
+        permissionManager.handlePermissionResult(permissions, grantResults)
+
         // don't really need to check whether the permissions were granted or not?
         //  just check all of the permissions and hide the button appropriately
-        adjustPermissionsComponents(PermissionManager(this, this).checkNeedAnyPermissions())
+        adjustPermissionsComponents(permissionManager.checkNeedAnyPermissions())
     }
 
     private fun updateMainContent(needPermissions: Boolean) {
@@ -523,12 +530,10 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         Log.d(tag, "Don't need any permissions, we are all set?!")
 
-                        // get the hours and minutes so we can show the time until the next
-                        //  activity check in a friendly format
-                        val alarmTimestampInSec =
-                            (alarmTimestamp - System.currentTimeMillis()) / 1000
-                        val hours = alarmTimestampInSec / 3600
-                        val minutes = (alarmTimestampInSec % 3600) / 60
+                        // minutes until the next activity check, shown in a
+                        //  friendly format without a leading zero-hours unit
+                        val minutesUntilCheck =
+                            (alarmTimestamp - System.currentTimeMillis()) / 1000 / 60
 
                         // set a big green message indicating that monitoring is active
                         monitoringStatusTextView.text = getString(R.string.monitoring_active_title)
@@ -539,10 +544,8 @@ class MainActivity : AppCompatActivity() {
                         // set the message to show the last detected activity and when the next check is
                         monitoringMessageTextView.text = String.format(
                             getString(R.string.monitoring_active_message),
-                            getDateTimeStrFromTimestamp(
-                                lastInteractiveEvent.timeStamp,
-                                TimeZone.getDefault().id
-                            ), hours.toString(), minutes.toString()
+                            formatLastActivityTimestamp(this, lastInteractiveEvent.timeStamp),
+                            formatCountdown(this, minutesUntilCheck)
                         )
 
                         // check whether app restrictions are enabled and adjust the components based
@@ -796,7 +799,7 @@ class MainActivity : AppCompatActivity() {
     //  if so, prompt the user to disable it
     private fun requestDisableAppRestrictions(appRestrictionsStatus: Int) {
         try {
-            // default to the API 32+ message
+            // default to the suffixless message, which carries the newest wording
             var dialogMessage = getString(R.string.hibernation_dialog_message)
 
 
@@ -823,23 +826,15 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 // ugh there is no 32+ constant and the wording used in the app Settings is different
-                //  in 31 than it is in 32-34 and 35 so we need to detect which the device is using...
+                //  in 31 than it is in 32-34 and 35+ so we need to detect which the device is using...
                 UnusedAppRestrictionsConstants.API_31 -> {
                     Log.d(
                         "reqDisableAppHiber",
                         "App hibernation enabled on API 31 or higher. SDK_INT is ${Build.VERSION.SDK_INT}"
                     )
 
-                    // API 31 uses different wording so need to set the message string accordingly
-                    dialogMessage = if (Build.VERSION.SDK_INT == 31) {
-                        getString(R.string.hibernation_dialog_message_api31)
-                    } else if (Build.VERSION.SDK_INT == 35) {
-                        // message for 35
-                        getString(R.string.hibernation_dialog_message_api35)
-                    } else {
-                        // message for 32-34
-                        getString(R.string.hibernation_dialog_message)
-                    }
+                    // the wording differs by API level so pick the matching message string
+                    dialogMessage = getString(hibernationDialogMessageResId(Build.VERSION.SDK_INT))
                 }
             }
 
@@ -926,5 +921,26 @@ class MainActivity : AppCompatActivity() {
                 putExtra(EXTRA_ALERT_CHECK, true)
             }
         }
+    }
+}
+
+/**
+ * Which hibernation dialog wording matches [sdkInt], within the API_31
+ * unused-app-restrictions status (the androidx constant covers all of 31+).
+ *
+ * Descending thresholds so that new API levels inherit the newest wording
+ * (the suffixless string) instead of falling through to an older variant
+ * (issue #196). A new suffixed string is only needed when Android actually
+ * changes the wording again. The API-30-and-below and backport variants are
+ * selected by the status constant, not by SDK level.
+ */
+internal fun hibernationDialogMessageResId(sdkInt: Int): Int {
+    return when {
+        // 35 and newer: 'Manage app if unused'
+        sdkInt >= 35 -> R.string.hibernation_dialog_message
+        // 32-34: 'Pause app activity if unused'
+        sdkInt >= 32 -> R.string.hibernation_dialog_message_api32
+        // 31: 'Remove permissions and free up space'
+        else -> R.string.hibernation_dialog_message_api31
     }
 }

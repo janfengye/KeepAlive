@@ -13,6 +13,7 @@
       <string name="confirm">Conferma</string>  
       <string name="back">Indietro</string>  
       <string name="go_to_settings">Impostazioni</string>  
+      <string name="permission_denied_go_to_settings_message">Questa autorizzazione è attualmente impostata su «Non consentito», quindi non può essere richiesta qui. Apri le Impostazioni e concedila affinché gli avvisi possano essere inviati.</string>
       <string name="enabled">Attivato</string>  
       
       <!-- webhook layout strings -->  
@@ -71,14 +72,16 @@
       
         <!-- app hibernation/restriction stuff -->  
         <string name="hibernation_dialog_title">Disattiva la limitazione dell\'app</string>  
-        <string name="hibernation_dialog_message"><![CDATA[Android ora rimuove automaticamente le autorizzazioni per le app che non sono state utilizzate di recente. Keep Alive, una volta configurato, non richiede ulteriori interazioni e potrebbe vedersi revocare le autorizzazioni.<br/><br/>Per garantire che Keep Alive possa funzionare, disattivare l\'opzione <b>Sospendi l\'attività dell\'app se non utilizzata</b> per l\'applicazione Keep Alive.]]></string>  
-        <string name="hibernation_dialog_message_api35"><![CDATA[Android ora rimuove automaticamente le autorizzazioni per le app che non sono state utilizzate di recente. Keep Alive, una volta configurato, non richiede ulteriori interazioni e potrebbe vedersi revocare le autorizzazioni.<br/><br/>Per assicurarsi che le autorizzazioni non vengano revocate, disattivare l\'opzione <b>"Gestisci l\'app se non utilizzata"</b> per l\'applicazione Keep Alive.]]></string>  
+        <string name="hibernation_dialog_message"><![CDATA[Android ora rimuove automaticamente le autorizzazioni per le app che non sono state utilizzate di recente. Keep Alive, una volta configurato, non richiede ulteriori interazioni e potrebbe vedersi revocare le autorizzazioni.<br/><br/>Per assicurarsi che le autorizzazioni non vengano revocate, disattivare l\'opzione <b>"Gestisci l\'app se non utilizzata"</b> per l\'applicazione Keep Alive.]]></string>
+        <string name="hibernation_dialog_message_api32"><![CDATA[Android ora rimuove automaticamente le autorizzazioni per le app che non sono state utilizzate di recente. Keep Alive, una volta configurato, non richiede ulteriori interazioni e potrebbe vedersi revocare le autorizzazioni.<br/><br/>Per garantire che Keep Alive possa funzionare, disattivare l\'opzione <b>Sospendi l\'attività dell\'app se non utilizzata</b> per l\'applicazione Keep Alive.]]></string>
         <string name="hibernation_dialog_message_api30"><![CDATA[Android ora rimuove automaticamente le autorizzazioni per le app che non sono state utilizzate di recente. Keep Alive, una volta configurato, non richiede ulteriori interazioni a meno che non venga attivato un avviso.<br/><br/>Per assicurarsi che le autorizzazioni non vengano revocate, accedere alla sezione <b>Autorizzazioni</b> per Keep Alive e disattivare l\'opzione <b>Rimuovi autorizzazioni se l\'app non viene utilizzata</b>.]]></string>  
         <string name="hibernation_dialog_message_api31"><![CDATA[Android ora rimuove automaticamente le autorizzazioni per le app che non sono state utilizzate di recente. Keep Alive, una volta configurato, non richiede ulteriori interazioni a meno che non venga attivato un avviso.<br/><br/>Per garantire che le autorizzazioni non vengano revocate, disattivare l\'opzione <b>Rimuovi autorizzazioni e libera spazio</b> per l\'applicazione Keep Alive.]]></string>  
         <string name="hibernation_dialog_message_api_backport"><![CDATA[Android ora rimuove automaticamente le autorizzazioni per le app che non sono state utilizzate di recente. Keep Alive, una volta configurato, non richiede ulteriori interazioni a meno che non venga attivato un avviso.<br/><br/>Per garantire che le autorizzazioni non vengano revocate, disattivare l\'opzione <b>Rimuovi le autorizzazioni se l\'app non viene utilizzata</b>.]]></string>  
       
         <!-- MainActivity textview and button messages -->  
-        <string name="monitoring_active_message">Ultima attività rilevata a: %1$s\nProssima registrazione attività: %2$s ore e %3$s minuti</string>  
+        <string name="monitoring_active_message">Ultima attività rilevata a: %1$s\nProssima registrazione attività: %2$s</string>
+        <string name="countdown_format_hours_minutes">%1$s h %2$s min</string>
+        <string name="countdown_format_minutes">%1$s min</string>
         <string name="monitoring_active_title">Monitoraggio attivo</string>  
         <string name="monitoring_impaired_title">Monitoraggio attivo\nMa potrebbe essere compromesso</string>  
         <string name="monitoring_inactive_message">Il monitoraggio non è attivo.\nFare clic sul pulsante per riavviarlo.</string>  
@@ -183,7 +186,7 @@
         <string name="contact_phone_title">Numero di telefono da chiamare (facoltativo)</string>  
         <string name="add_sms_contact_button_text">Aggiungi un contatto di emergenza SMS</string>  
         <string name="contact_phone_description">Quando viene attivato un avviso, verrà effettuata una telefonata a questo numero di telefono con l\'altoparlante attivato.\n\nSi prega di notare che ciò richiede autorizzazioni aggiuntive affinché le telefonate possano essere effettuate in background.</string>  
-        <string name="default_alert_message">Ciao! Non uso il mio telefono da un po\' e potrei aver bisogno di aiuto. Per favore, mandate aiuto!</string>  
+        <string name="default_alert_message">Avviso automatico: non uso il telefono da un po\' e potrei aver bisogno di aiuto. Provate a contattarmi e, se non mi raggiungete, controllate che stia bene.</string>
         <string name="default_alert_message_alt">Ehi, se non ti contatto nelle prossime 24 ore, sai cosa fare.</string>  
         <string name="add_emergency_contact_title">Aggiungi un contatto di emergenza</string>  
         <string name="edit_emergency_contact_title">Modifica un contatto di emergenza</string>  
@@ -251,9 +254,13 @@
         <!-- REQUEST_SCHEDULE_EXACT_ALARM Permission (For S and above) -->  
         <string name="permission_schedule_alarms_title">Autorizzazione richiesta: Pianificare allarmi</string>  
         <string name="permission_schedule_alarms_description">La pianificazione degli allarmi è richiesta affinché l\'avviso possa attivarsi anche quando il tuo dispositivo è inattivo o in modalità Non disturbare.\n\nSi prega di attivare questa autorizzazione per l\'applicazione KeepAlive nelle impostazioni del tuo dispositivo.</string>  
+        <string name="permission_full_screen_intent_title">Autorizzazione richiesta: Notifiche a schermo intero</string>
+        <string name="permission_full_screen_intent_description">Le notifiche a schermo intero sono necessarie per mostrare il controllo \'Ci sei ancora?\' sulla schermata di blocco, in modo che non passi inosservato mentre il telefono è bloccato.\n\nAttiva \'Notifiche a schermo intero\' per l\'app Keep Alive nella schermata successiva.</string>
       
         <!-- AlertFunctions.kt -->  
         <string name="debug_log_doing_alert_check">Esecuzione di una verifica periodica, il passaggio di avviso è %1$s</string>  
+        <string name="debug_log_full_screen_prompt_shown">Avviso a schermo intero \'Ci sei ancora?\' mostrato sopra la schermata di blocco</string>
+        <string name="debug_log_full_screen_prompt_acknowledged">Avviso a schermo intero \'Ci sei ancora?\' confermato</string>
         <string name="debug_log_sending_alert_sms">Invio di un SMS di avviso!</string>  
         <string name="debug_log_getting_sms_manager_with_sub_id">Ottenimento del gestore SMS con context.getSystemService e l\'ID di abbonamento %1$d</string>  
         <string name="debug_log_getting_sms_manager_with_context">Ottenimento del gestore SMS con context.getSystemService</string>  

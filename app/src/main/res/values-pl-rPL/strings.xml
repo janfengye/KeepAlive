@@ -13,6 +13,7 @@
     <string name="confirm">Potwierdź</string>
     <string name="back">Z powrotem</string>
     <string name="go_to_settings">Przejdź do Ustawień</string>
+    <string name="permission_denied_go_to_settings_message">To uprawnienie jest obecnie ustawione na „Nie zezwalaj", więc nie można go tu poprosić. Otwórz Ustawienia i zezwól na nie, aby alarmy mogły być wysyłane.</string>
     <string name="enabled">Aktywny</string>
 
     <!-- webhook layout strings -->
@@ -71,14 +72,16 @@
 
     <!-- app hibernation/restriction stuff -->
     <string name="hibernation_dialog_title">Wyłącz Ograniczenia Aplikacji</string>
-    <string name="hibernation_dialog_message"><![CDATA[Android automatycznie usuwa uprawnienia aplikacji, które nie były ostatnio używane.  Aplikacja Keep Alive nie potrzebuje żadnej interakcji po jej pierwszej konfiguracji i może przez to stracić uprawnienia.<br/><br/>Żeby mieć pewność, że Keep Alive może działać poprawnie wyłącz opcje <b>Wstrzymuj aktywność w aplikacji, jeśli jest nieużywana</b>.]]></string>
-    <string name="hibernation_dialog_message_api35"><![CDATA[Android automatycznie cofa teraz uprawnienia dla aplikacji, które nie były ostatnio używane. Keep Alive, po skonfigurowaniu ustawień, nie wymaga dalszej interakcji i może zostać pozbawiony swoich uprawnień.<br/><br/>Aby upewnić się, że uprawnienia nie zostaną cofnięte, wyłącz opcję <b>Zarządzaj nieużywanymi aplikacjami</b> dla aplikacji Keep Alive.]]></string>
+    <string name="hibernation_dialog_message"><![CDATA[Android automatycznie cofa teraz uprawnienia dla aplikacji, które nie były ostatnio używane. Keep Alive, po skonfigurowaniu ustawień, nie wymaga dalszej interakcji i może zostać pozbawiony swoich uprawnień.<br/><br/>Aby upewnić się, że uprawnienia nie zostaną cofnięte, wyłącz opcję <b>Zarządzaj nieużywanymi aplikacjami</b> dla aplikacji Keep Alive.]]></string>
+    <string name="hibernation_dialog_message_api32"><![CDATA[Android automatycznie usuwa uprawnienia aplikacji, które nie były ostatnio używane.  Aplikacja Keep Alive nie potrzebuje żadnej interakcji po jej pierwszej konfiguracji i może przez to stracić uprawnienia.<br/><br/>Żeby mieć pewność, że Keep Alive może działać poprawnie wyłącz opcje <b>Wstrzymuj aktywność w aplikacji, jeśli jest nieużywana</b>.]]></string>
     <string name="hibernation_dialog_message_api30"><![CDATA[Android teraz automatycznie usuwa uprawnienia dla aplikacji, które nie były ostatnio używane. Keep Alive, po skonfigurowaniu ustawień, nie wymaga dalszej interakcji, chyba że zostanie uruchomiony Alert.<br/><br/>Aby mieć pewność, że uprawnienia nie zostaną cofnięte, przejdź do sekcji <b>Uprawnienia</b> dla Keep Alive i wyłącz opcję <b>Usuń uprawnienia, jeśli aplikacja jest nieużywana</b>.]]></string>
     <string name="hibernation_dialog_message_api31"><![CDATA[Android automatycznie usuwa uprawnienia aplikacji, które nie były ostatnio używane.  Aplikacja Keep Alive nie potrzebuje żadnej interakcji po jej pierwszej konfiguracji i może przez to stracić uprawnienia.<br/><br/>Żeby mieć pewność, że Keep Alive może działać poprawnie wyłącz opcje <b>Usuń uprawnienia i zwolnij miejsce</b> dla aplikacji Keep Alive.]]></string>
     <string name="hibernation_dialog_message_api_backport"><![CDATA[Android automatycznie usuwa uprawnienia aplikacji, które nie były ostatnio używane.  Aplikacja Keep Alive nie potrzebuje żadnej interakcji po jej pierwszej konfiguracji i może przez to stracić uprawnienia.<br/><br/>Żeby mieć pewność, że Keep Alive może działać poprawnie wyłącz opcje <b>Usuń uprawnienia, jeśli aplikacja jest nieużywana</b>.]]></string>
 
     <!-- MainActivity textview and button messages -->
-    <string name="monitoring_active_message">Ostatnia wykryta aktywność: %1$s\nNastępne sprawdzenie za: %2$s godzin %3$s minut</string>
+    <string name="monitoring_active_message">Ostatnia wykryta aktywność: %1$s\nNastępne sprawdzenie za: %2$s</string>
+    <string name="countdown_format_hours_minutes">%1$s godz. %2$s min</string>
+    <string name="countdown_format_minutes">%1$s min</string>
     <string name="monitoring_active_title">Monitorowanie Aktywne</string>
     <string name="monitoring_impaired_title">Monitorowanie Aktywne\nAle może być zakłócone</string>
     <string name="monitoring_inactive_message">Monitorowanie nie jest aktywne.\nKliknij przycisk aby je ponownie uruchomić.</string>
@@ -183,7 +186,7 @@
     <string name="contact_phone_title">Numer Połączenia Alarmowego (Opcjonalnie)</string>
     <string name="add_sms_contact_button_text">Dodaj Numer Alerów SMS</string>
     <string name="contact_phone_description">Kiedy Alert zostanie wywołany, telefon zadzwoni na ten numer telefonu z włączonym trybem głośnomówiącym.\n\nWymaga to dodatkowych uprawnień, żeby telefon mógł dzwonić w tle.</string>
-    <string name="default_alert_message">Hej! Nie używałem telefonu już od dłuższego czasu i mogę potrzebować wsparcia. Pomóż proszę!</string>
+    <string name="default_alert_message">Automatyczny alarm: długo nie używam telefonu i mogę potrzebować pomocy. Spróbuj się ze mną skontaktować, a jeśli się nie uda, sprawdź, czy nic mi nie jest.</string>
     <string name="default_alert_message_alt">Hej, jeśli nie skontaktuję się z Tobą przez 24 godziny to wiesz co robić.</string>
     <string name="add_emergency_contact_title">Dodaj Kontakt Alarmowy</string>
     <string name="edit_emergency_contact_title">Zmień Kontakt Alarmowy</string>
@@ -251,9 +254,13 @@
     <!-- REQUEST_SCHEDULE_EXACT_ALARM Permission (For S and above) -->
     <string name="permission_schedule_alarms_title">Wymagane Uprawnienie: Harmonogram Alarmów</string>
     <string name="permission_schedule_alarms_description">Planowanie alarmów jest wymagane, aby Alert mógł być wywołany nawet gdy urządzenie jest uśpione albo w trybie Nie Przeszkadzać.\n\nProszę przyznać to uprawnienie aplikacji KeepAlive w ustawieniach urządzenia.</string>
+    <string name="permission_full_screen_intent_title">Wymagane uprawnienie: Powiadomienia pełnoekranowe</string>
+    <string name="permission_full_screen_intent_description">Powiadomienia pełnoekranowe są potrzebne, aby wyświetlić kontrolę \'Czy nadal tam jesteś?\' na ekranie blokady, tak aby nie została przeoczona, gdy telefon jest zablokowany.\n\nNa następnym ekranie włącz \'Powiadomienia pełnoekranowe\' dla aplikacji Keep Alive.</string>
 
     <!-- AlertFunctions.kt -->
     <string name="debug_log_doing_alert_check">Wykonywanie okresowego sprawdzania, etap alarmu to %1$s</string>
+    <string name="debug_log_full_screen_prompt_shown">Pełnoekranowy monit \'Czy nadal tam jesteś?\' wyświetlony na ekranie blokady</string>
+    <string name="debug_log_full_screen_prompt_acknowledged">Pełnoekranowy monit \'Czy nadal tam jesteś?\' potwierdzony</string>
     <string name="debug_log_sending_alert_sms">Wysyłanie alertu SMS!</string>
     <string name="debug_log_getting_sms_manager_with_sub_id">Pobieranie menedżera SMS za pomocą context.getSystemService i identyfikatora sub %1$d</string>
     <string name="debug_log_getting_sms_manager_with_context">Pobieranie menedżera SMS za pomocą context.getSystemService</string>

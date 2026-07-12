@@ -14,6 +14,7 @@
     <string name="confirm">Confirm</string>
     <string name="back">Back</string>
     <string name="go_to_settings">Go to Settings</string>
+    <string name="permission_denied_go_to_settings_message">This permission is currently set to \"Not allowed\", so it can\'t be requested here. Please open Settings and allow it so that alerts can be sent.</string>
     <string name="enabled">Enabled</string>
     <string name="placeholder" translatable="false">PLACEHOLDER TEXT</string>
 
@@ -83,14 +84,16 @@
 
     <!-- app hibernation/restriction stuff -->
     <string name="hibernation_dialog_title">Disable App Restriction</string>
-    <string name="hibernation_dialog_message"><![CDATA[Android now automatically removes permissions for apps that have not been used recently.  Keep Alive, once the settings are configured, does not need any further interaction and may have its permissions revoked.<br/><br/>To ensure that permissions are not revoked, please disable the <b>\'Pause app activity if unused\'</b> option for the Keep Alive app.]]></string>
-    <string name="hibernation_dialog_message_api35"><![CDATA[Android now automatically removes permissions for Apps that have not been used recently.  Keep Alive, once the settings are configured, does not need any further interaction and may have its permissions revoked.<br/><br/>To ensure that permissions are not revoked, please disable the <b>\'Manage app if unused\'</b> option for the Keep Alive app.]]></string>
+    <string name="hibernation_dialog_message"><![CDATA[Android now automatically removes permissions for Apps that have not been used recently.  Keep Alive, once the settings are configured, does not need any further interaction and may have its permissions revoked.<br/><br/>To ensure that permissions are not revoked, please disable the <b>\'Manage app if unused\'</b> option for the Keep Alive app.]]></string>
+    <string name="hibernation_dialog_message_api32"><![CDATA[Android now automatically removes permissions for apps that have not been used recently.  Keep Alive, once the settings are configured, does not need any further interaction and may have its permissions revoked.<br/><br/>To ensure that permissions are not revoked, please disable the <b>\'Pause app activity if unused\'</b> option for the Keep Alive app.]]></string>
     <string name="hibernation_dialog_message_api30"><![CDATA[Android now automatically removes permissions for Apps that have not been used recently.  Keep Alive, once the settings are configured, does not need any further interaction unless an Alert is triggered.<br/><br/>To ensure that permissions are not revoked, please navigate to the <b>Permissions</b> section for Keep Alive and disable the  <b>\'Remove permissions if app isn\'t used\'</b> option.]]></string>
     <string name="hibernation_dialog_message_api31"><![CDATA[Android now automatically removes permissions for Apps that have not been used recently.  Keep Alive, once the settings are configured, does not need any further interaction unless an Alert is triggered.<br/><br/>To ensure that permissions are not revoked, please disable the <b>\'Remove permissions and free up space\'</b> option for the Keep Alive app.]]></string>
     <string name="hibernation_dialog_message_api_backport"><![CDATA[Android now automatically removes permissions for Apps that have not been used recently.  Keep Alive, once the settings are configured, does not need any further interaction unless an Alert is triggered.<br/><br/>To ensure that permissions are not revoked, please disable the <b>\'Remove permissions if app isn\'t used\'</b> option.]]></string>
 
     <!-- MainActivity textview and button messages -->
-    <string name="monitoring_active_message">Last activity detected at: %1$s\nNext activity check in: %2$s hours and %3$s minutes</string>
+    <string name="monitoring_active_message">Last activity detected at: %1$s\nNext activity check in: %2$s</string>
+    <string name="countdown_format_hours_minutes">%1$s h %2$s min</string>
+    <string name="countdown_format_minutes">%1$s min</string>
     <string name="monitoring_active_title">Monitoring Active</string>
     <string name="monitoring_impaired_title">Monitoring Active\nBut May Be Impaired</string>
     <string name="monitoring_inactive_message">Monitoring is not active.\nClick the button to restart it.</string>
@@ -195,7 +198,7 @@
     <string name="contact_phone_title">Call Phone Number (Optional)</string>
     <string name="add_sms_contact_button_text">Add SMS Emergency Contact</string>
     <string name="contact_phone_description">When an Alert is triggered, a phone call will be placed to this phone number with speakerphone enabled.\n\nPlease note that this requires additional permissions so that phone calls can be placed from the background.</string>
-    <string name="default_alert_message">Hello! I have not used my phone in a while and may be in need of assistance. Please send help!</string>
+    <string name="default_alert_message">Automated alert: I have not used my phone in a while and may need assistance. Please try to contact me, and check on me if you cannot reach me.</string>
     <string name="default_alert_message_alt">Hey, if I do not contact you in the next 24 hours, you know what to do.</string>
     <string name="add_emergency_contact_title">Add Emergency Contact</string>
     <string name="edit_emergency_contact_title">Edit Emergency Contact</string>
@@ -263,6 +266,14 @@
     <!-- REQUEST_SCHEDULE_EXACT_ALARM Permission (For S and above) -->
     <string name="permission_schedule_alarms_title">Permission Required: Schedule Alarms</string>
     <string name="permission_schedule_alarms_description">Scheduling alarms is required so that the Alert can trigger even when your device is sleeping or in Do Not Disturb mode.\n\nPlease enable this permission for the KeepAlive app in your device settings.</string>
+
+    <!-- USE_FULL_SCREEN_INTENT special access (API 34 and above) -->
+    <string name="permission_full_screen_intent_title">Permission Required: Full Screen Notifications</string>
+    <string name="permission_full_screen_intent_description">Full screen notifications are needed to show the \'Are you there?\' check on the lock screen, so it cannot be missed while your phone is locked.\n\nPlease enable \'Full screen notifications\' for the Keep Alive app on the next screen.</string>
+
+    <!-- AreYouThereActivity.kt -->
+    <string name="debug_log_full_screen_prompt_shown">Full-screen Are you there? prompt shown over lock screen</string>
+    <string name="debug_log_full_screen_prompt_acknowledged">Full-screen Are you there? prompt acknowledged</string>
 
     <!-- AlertFunctions.kt -->
     <string name="debug_log_doing_alert_check">Doing periodic check, alarm stage is %1$s</string>

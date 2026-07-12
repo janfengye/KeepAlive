@@ -13,6 +13,7 @@
     <string name="confirm">确认</string>
     <string name="back">后退</string>
     <string name="go_to_settings">去设置</string>
+    <string name="permission_denied_go_to_settings_message">此权限当前被设置为“不允许”，因此无法在此请求。请打开设置并授予该权限，以便能够发送警报。</string>
     <string name="enabled">启用</string>
 
     <!-- webhook layout strings -->
@@ -71,14 +72,16 @@
 
     <!-- app hibernation/restriction stuff -->
     <string name="hibernation_dialog_title">解除App限制</string>
-    <string name="hibernation_dialog_message"><![CDATA[Android会自动清除长期未使用App的隐私权限。  KeepAlive一旦完成初次设置，无需任何进一步的交互操作，权限可能被撤销并导致提醒无法发送。<br/><br/>为了确保权限不被撤销, 请禁用 <b>暂停闲置应用的活动</b> 的选项。]]></string>
-    <string name="hibernation_dialog_message_api35"><![CDATA[Android会自动清除长期未使用App的隐私权限。  KeepAlive一旦完成初次设置，无需任何进一步的交互操作，权限可能被撤销并导致提醒无法发送。<br/><br/>为了确保权限不被撤销, 请禁用 <b>管理闲置应用</b> 的选项。]]></string>
+    <string name="hibernation_dialog_message"><![CDATA[Android会自动清除长期未使用App的隐私权限。  KeepAlive一旦完成初次设置，无需任何进一步的交互操作，权限可能被撤销并导致提醒无法发送。<br/><br/>为了确保权限不被撤销, 请禁用 <b>管理闲置应用</b> 的选项。]]></string>
+    <string name="hibernation_dialog_message_api32"><![CDATA[Android会自动清除长期未使用App的隐私权限。  KeepAlive一旦完成初次设置，无需任何进一步的交互操作，权限可能被撤销并导致提醒无法发送。<br/><br/>为了确保权限不被撤销, 请禁用 <b>暂停闲置应用的活动</b> 的选项。]]></string>
     <string name="hibernation_dialog_message_api30"><![CDATA[Android会自动清除长期未使用App的隐私权限。  KeepAlive一旦设置完成，除非触发提醒，否则无需任何进一步的交互操作。<br/><br/>为了确保权限不被撤销, 请打开 <b>权限</b> 设置并禁用 <b>如果未使用此应用，则移除相关权限</b> 的选项。]]></string>
     <string name="hibernation_dialog_message_api31"><![CDATA[Android会自动清除长期未使用App的隐私权限。  KeepAlive一旦设置完成，除非触发提醒，否则无需任何进一步的交互操作。<br/><br/>为了确保权限不被撤销, 请禁用 <b>移除权限并释放空间</b> 的选项。]]></string>
     <string name="hibernation_dialog_message_api_backport"><![CDATA[Android会自动清除长期未使用App的隐私权限。  KeepAlive一旦设置完成，除非触发提醒，否则无需任何进一步的交互操作。<br/><br/>为了确保权限不被撤销， 请禁用 <b>如果未使用此应用，则移除相关权限</b> 的选项。]]></string>
 
     <!-- MainActivity textview and button messages -->
-    <string name="monitoring_active_message">上一次活动: %1$s\n下一次检测: %2$s小时%3$s分钟后</string>
+    <string name="monitoring_active_message">上一次活动: %1$s\n下一次检测: %2$s后</string>
+    <string name="countdown_format_hours_minutes">%1$s小时%2$s分钟</string>
+    <string name="countdown_format_minutes">%1$s分钟</string>
     <string name="monitoring_active_title">监测器正常运行</string>
     <string name="monitoring_impaired_title">监测器正在运行\n但受损</string>
     <string name="monitoring_inactive_message">监测器已停止。\n点击按钮重新启动。</string>
@@ -183,7 +186,7 @@
     <string name="contact_phone_title">电话联系（可选）</string>
     <string name="add_sms_contact_button_text">短信联系</string>
     <string name="contact_phone_description">触发提醒后，将向该电话号码拨打语音电话并启用免提功能。\n\n请注意，这需要授予额外的权限以便从后台拨打电话。</string>
-    <string name="default_alert_message">Hello! I have not used my phone in a while and may be in need of assistance. Please send help!</string>
+    <string name="default_alert_message">自动警报：我已有一段时间未使用手机，可能需要帮助。请尝试联系我；若联系不上，请确认我是否安好。</string>
     <string name="default_alert_message_alt">Hey, if I do not contact you in the next 24 hours, you know what to do.</string>
     <string name="add_emergency_contact_title">添加联系人</string>
     <string name="edit_emergency_contact_title">编辑联系人</string>
@@ -251,9 +254,13 @@
     <!-- REQUEST_SCHEDULE_EXACT_ALARM Permission (For S and above) -->
     <string name="permission_schedule_alarms_title">需要授予权限: 闹钟和提醒</string>
     <string name="permission_schedule_alarms_description">需要授予闹钟和提醒权限，这样即使设备处于睡眠或勿扰模式，提醒也能触发。\n\n请在设置中为 KeepAlive 启用此权限。</string>
+    <string name="permission_full_screen_intent_title">需要权限：全屏通知</string>
+    <string name="permission_full_screen_intent_description">需要全屏通知才能在锁定屏幕上显示“您还在吗？”检查，确保手机锁定时不会被错过。\n\n请在下一个屏幕中为 Keep Alive 应用启用“全屏通知”。</string>
 
     <!-- AlertFunctions.kt -->
     <string name="debug_log_doing_alert_check">Doing periodic check, alarm stage is %1$s</string>
+    <string name="debug_log_full_screen_prompt_shown">全屏“您还在吗？”提示已显示在锁定屏幕上</string>
+    <string name="debug_log_full_screen_prompt_acknowledged">全屏“您还在吗？”提示已确认</string>
     <string name="debug_log_sending_alert_sms">Sending alert SMS!</string>
     <string name="debug_log_getting_sms_manager_with_sub_id">Getting SMS manager with context.getSystemService and sub id %1$d</string>
     <string name="debug_log_getting_sms_manager_with_context">Getting SMS manager with context.getSystemService</string>
